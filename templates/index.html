@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store Management System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body {
+            background-image: url('/static/images/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            background-color: transparent;
+            padding: 15px;
+        }
+
+        .nav-buttons a {
+            background-color: #0275d8;
+            color: white;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #025aa5;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-blue {
+            background-color: #0275d8;
+        }
+
+        .btn-blue:hover {
+            background-color: #025aa5;
+        }
+
+        .btn-red {
+            background-color: #d9534f;
+        }
+
+        .btn-red:hover {
+            background-color: #c9302c;
+        }
+
+        form {
+            display: inline-block;
+        }
+
+        /* Align Update and Delete buttons side by side */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Add space between buttons */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-buttons">
+            <a href="/templates/manage_product.html" class="btn btn-blue">Manage Products</a>
+            <a href="/templates/order.html" class="btn btn-blue">New Order</a>
+        </div>
+    </header>
+
+    <div class="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Customer Name</th>
+                    <th>Contact Number</th>
+                    <th>Product Name</th> <!-- Added Product Name -->
+                    <th>Total Quantity of Product</th>
+                    <th>Total Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.customer_contact }}</td>
+                    <td>{{ order.product_name }}</td> <!-- Display Product Name -->
+                    <td>{{ order.total_product }}</td>
+                    <td>{{ order.total_amount }}</td>
+                    <td>
+                        <!-- Align Update and Delete buttons side by side -->
+                        <div class="action-buttons">
+                            <a href="/update_order/{{ order.id }}" class="btn btn-blue">Update</a>
+                            <form action="/delete_order/{{ order.id }}" method="POST">
+                                <button type="submit" class="btn btn-red">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
